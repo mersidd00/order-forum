@@ -1,0 +1,167 @@
+{
+  "name": "order forum",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order",
+        "options": {
+          "responseData": ""
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        40,
+        20
+      ],
+      "id": "7d883403-bdac-4f70-8b81-f2f414ac0492",
+      "name": "Webhook",
+      "webhookId": "d10da62e-40f9-4e8a-844d-afbe7bdf77d5"
+    },
+    {
+      "parameters": {
+        "chatId": "776722558",
+        "text": "=🛒 طلب جديد:\n\n👤 الاسم: {{$json.body.firstName}}\n📞 الهاتف: {{$json.body.phone}}\n🏙️ الولاية: {{$json.body.state}}\n🚚 سعر التوصيل: {{$json.body.deliveryPrice}}\n🔢 الكمية: {{$json.body.quantity}}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        260,
+        20
+      ],
+      "id": "7284941e-a9dd-4f3c-b3e4-673b3d5ad0ee",
+      "name": "Telegram",
+      "webhookId": "ae8b1b9a-4e20-40cd-81b4-27f7ec0bbe50",
+      "credentials": {
+        "telegramApi": {
+          "id": "ZdRLCoe1Gs4DBaMC",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1HkvrO_zS922oN1NP9A24JfxyA4C6k4yW11500ONeKBE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HkvrO_zS922oN1NP9A24JfxyA4C6k4yW11500ONeKBE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.firstName }}",
+            "Phone": "={{ $json.body.phone }}",
+            "State": "={{ $json.body.state }}",
+            "Quantity": "={{ $json.body.quantity }}",
+            "Delivery Price": "={{ $json.body.deliveryPrice }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "State",
+              "displayName": "State",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Delivery Price",
+              "displayName": "Delivery Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        260,
+        180
+      ],
+      "id": "10fc03e8-87dc-4794-af6b-bd30be26e84e",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "oROxpelI93dHVJkX",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b3656299-2d1e-4e6c-9ee0-24d6727cc3c0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "25bf31b69e7d690460f9f32ba0dddb2610e3c43b21a18277dd5870f6c17390a4"
+  },
+  "id": "7UMskcJyQwfYdW3s",
+  "tags": []
+}
